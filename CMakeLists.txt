@@ -4,6 +4,4 @@ project(Burgers_Static VERSION 1.0 LANGUAGES C Fortran)
 
 find_package(OpenCMISSLibs 1.3.0 REQUIRED COMPONENTS Iron CONFIG)
 
-include(OCMiscFunctions)
-
 add_subdirectory(src/fortran)
