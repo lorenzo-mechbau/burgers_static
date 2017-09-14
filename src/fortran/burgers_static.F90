@@ -1,4 +1,4 @@
-PROGRAM StaticBurgersExample
+PROGRAM burgers_static
 
   USE OpenCMISS
   USE OpenCMISS_Iron
@@ -408,4 +408,4 @@ PROGRAM StaticBurgersExample
   CALL cmfe_Finalise(Err)
   WRITE(*,'(A)') "Program successfully completed."
 
-END PROGRAM StaticBurgersExample
+END PROGRAM burgers_static
