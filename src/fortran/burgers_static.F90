@@ -6,9 +6,7 @@ PROGRAM StaticBurgersExample
 #ifndef NOMPIMOD
   USE MPI
 #endif
-
   IMPLICIT NONE
-
 #ifdef NOMPIMOD
 #include "mpif.h"
 #endif
@@ -18,7 +16,6 @@ PROGRAM StaticBurgersExample
   !-----------------------------------------------------------------------------------------------------------
 
   !Test program parameters
-  
   INTEGER(CMISSIntg), PARAMETER :: CoordinateSystemUserNumber=1
   INTEGER(CMISSIntg), PARAMETER :: RegionUserNumber=2
   INTEGER(CMISSIntg), PARAMETER :: BasisUserNumber=3
@@ -36,7 +33,6 @@ PROGRAM StaticBurgersExample
   INTEGER(CMISSIntg), PARAMETER :: SolverUserNumber=1
 
   !Program variables
-
   INTEGER(CMISSIntg) :: NUMBER_GLOBAL_X_ELEMENTS
   INTEGER(CMISSIntg) :: NUMBER_OF_DOMAINS
   INTEGER(CMISSIntg) :: COMPONENT_NUMBER
@@ -45,6 +41,7 @@ PROGRAM StaticBurgersExample
   INTEGER(CMISSIntg) :: MPI_IERROR
   INTEGER(CMISSIntg) :: NONLINEAR_SOLVER_OUTPUT_TYPE
   INTEGER(CMISSIntg) :: LINEAR_SOLVER_OUTPUT_TYPE
+  INTEGER(CMISSIntg) :: EQUATIONS_OUTPUT
   REAL(CMISSRP) :: DIVERGENCE_TOLERANCE
   REAL(CMISSRP) :: RELATIVE_TOLERANCE
   REAL(CMISSRP) :: ABSOLUTE_TOLERANCE
@@ -59,7 +56,6 @@ PROGRAM StaticBurgersExample
   INTEGER(CMISSIntg) :: FirstNodeNumber,LastNodeNumber,FirstNodeDomain,LastNodeDomain
 
   !Program types
-
   TYPE(cmfe_BasisType) :: Basis
   TYPE(cmfe_BoundaryConditionsType) :: BoundaryConditions
   TYPE(cmfe_CoordinateSystemType) :: CoordinateSystem,WorldCoordinateSystem
@@ -79,7 +75,6 @@ PROGRAM StaticBurgersExample
   LOGICAL :: EXPORT_FIELD
 
   !Generic CMISS variables
-
   INTEGER(CMISSIntg) :: NumberOfComputationalNodes,ComputationalNodeNumber,BoundaryNodeDomain
   INTEGER(CMISSIntg) :: EquationsSetIndex
   INTEGER(CMISSIntg) :: Err
@@ -103,6 +98,13 @@ PROGRAM StaticBurgersExample
   NU_PARAM=1.0_CMISSRP
   ! Set length of domain
   LENGTH=1.0_CMISSRP
+
+  !Set output parameters
+  !(NoOutput/ProgressOutput/TimingOutput/SolverOutput/SolverMatrixOutput)
+  NONLINEAR_SOLVER_OUTPUT_TYPE=CMFE_SOLVER_NO_OUTPUT
+  LINEAR_SOLVER_OUTPUT_TYPE=CMFE_SOLVER_NO_OUTPUT
+  !(NoOutput/TimingOutput/MatrixOutput/ElementOutput)
+  EQUATIONS_OUTPUT=CMFE_EQUATIONS_NO_OUTPUT
 
   !Set solver parameters
   LINEAR_SOLVER_DIRECT_FLAG=.FALSE.
@@ -309,14 +311,14 @@ PROGRAM StaticBurgersExample
   !Set the nonlinear Jacobian type
   CALL cmfe_Solver_NewtonJacobianCalculationTypeSet(NonlinearSolver,CMFE_SOLVER_NEWTON_JACOBIAN_EQUATIONS_CALCULATED,Err)
   !Set the output type (No/Progress/Timing/Solver)
-  CALL cmfe_Solver_OutputTypeSet(NonlinearSolver,CMFE_SOLVER_MATRIX_OUTPUT,Err)
+  CALL cmfe_Solver_OutputTypeSet(NonlinearSolver,NONLINEAR_SOLVER_OUTPUT_TYPE,Err)
   !Set the solver settings
   CALL cmfe_Solver_NewtonAbsoluteToleranceSet(NonlinearSolver,ABSOLUTE_TOLERANCE,Err)
   CALL cmfe_Solver_NewtonRelativeToleranceSet(NonlinearSolver,RELATIVE_TOLERANCE,Err)
   !Get the nonlinear linear solver
   CALL cmfe_Solver_NewtonLinearSolverGet(NonlinearSolver,LinearSolver,Err)
   !Set the output type
-  CALL cmfe_Solver_OutputTypeSet(LinearSolver,CMFE_SOLVER_MATRIX_OUTPUT,Err)
+  CALL cmfe_Solver_OutputTypeSet(LinearSolver,LINEAR_SOLVER_OUTPUT_TYPE,Err)
 
   !Set the solver settings
   IF(LINEAR_SOLVER_DIRECT_FLAG) THEN
@@ -398,8 +400,8 @@ PROGRAM StaticBurgersExample
   IF(EXPORT_FIELD) THEN
     CALL cmfe_Fields_Initialise(Fields,Err)
     CALL cmfe_Fields_Create(Region,Fields,Err)
-    CALL cmfe_Fields_NodesExport(Fields,"Burgers_1D","FORTRAN",Err)
-    CALL cmfe_Fields_ElementsExport(Fields,"Burgers_1D","FORTRAN",Err)
+    CALL cmfe_Fields_NodesExport(Fields,"burgers_static","FORTRAN",Err)
+    CALL cmfe_Fields_ElementsExport(Fields,"burgers_static","FORTRAN",Err)
     CALL cmfe_Fields_Finalise(Fields,Err)
   ENDIF
 
