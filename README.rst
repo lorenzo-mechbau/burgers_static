@@ -1,21 +1,22 @@
-
-
 ==============
 Burgers Static
 ==============
 
-Short synopsis of the example.
+Burgers equation is the simplified version of the Navier-Stokes equations (by dropping the pressure term). This equation can be investigated in one spatial dimension.
+The static form of the Burgers equation is implemented in this example.
+
 
 Building the example
 ====================
 
 The fortran version of the example can be configured and built with CMake::
 
-  cd ~/opencmiss/build/examples/
   git clone https://github.com/OpenCMISS-Examples/burgers_static.git
-  cd burgers_static/
-  cmake -DOpenCMISSLibs_DIR=~/opencmiss/install/  ~/opencmiss/src/examples/burgers_static/
+  mkdir burgers_static-build
+  cd burgers_static-build
+  cmake -DOpenCMISSLibs_DIR=~/opencmiss/install/  ../burgers_static/
   make
+
 
 Running the example
 ===================
@@ -23,20 +24,22 @@ Running the example
 Fortran version::
 
   cd src/fortran/
-  .burgers_static_fortran
+  ./burgers_static_fortran
 
-Python version::
+The results can be visualised by running `visualiseBurgersStatic.cmgui <./src/fortran/visualiseBurgersStatic.cmgui>`_ with the `Cmgui visualiser <http://physiomeproject.org/software/opencmiss/cmgui/download>`_.
 
-  source /opencmiss/install/virtaul_environments/oclibs_venv_py27_release/bin/activate
-  cd src/python/
-  python burgers_static.py
 
-The results can be visualised by running `visualise.com <./src/fortran/visualise.com>`_ with the `Cmgui visualiser <http://physiomeproject.org/software/opencmiss/cmgui/download>`_.
+References
+==========
+
+Heinrich, J.C. and Pepper, D.W., 1999. Intermediate finite element method: fluid flow and heat transfer applications. (pg. 216)
+
 
 Prerequisites
 =============
 
 There are no additional input files required for this example as it is self-contained.
+
 
 License
 =======
