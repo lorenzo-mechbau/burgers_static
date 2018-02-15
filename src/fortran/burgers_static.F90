@@ -394,7 +394,7 @@ PROGRAM burgers_static
   !-----------------------------------------------------------------------------------------------------------
 
   !Output Analytic analysis
-  Call cmfe_AnalyticAnalysis_Output(DependentField,"BurgersAnalytics_1D",Err)
+  !Call cmfe_AnalyticAnalysis_Output(DependentField,"BurgersAnalytics_1D",Err)
 
   !export fields
   EXPORT_FIELD=.TRUE.
