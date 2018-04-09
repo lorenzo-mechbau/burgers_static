@@ -250,17 +250,6 @@ PROGRAM burgers_static
     & 1,NU_PARAM,Err)
 
   !-----------------------------------------------------------------------------------------------------------
-  ! ANALYTIC FIELD
-  !-----------------------------------------------------------------------------------------------------------
-
-  !Create the equations set analytic field variables
-  !CALL cmfe_Field_Initialise(AnalyticField,Err)
-  !CALL cmfe_EquationsSet_AnalyticCreateStart(EquationsSet,CMFE_EQUATIONS_SET_BURGERS_EQUATION_ONE_DIM_1,AnalyticFieldUserNumber, &
-  ! & AnalyticField,Err)
-  !Finish the equations set analytic field variables
-  !CALL cmfe_EquationsSet_AnalyticCreateFinish(EquationsSet,Err)
-
-  !-----------------------------------------------------------------------------------------------------------
   ! EQUATIONS
   !-----------------------------------------------------------------------------------------------------------
   !Create the equations set equations
@@ -272,9 +261,6 @@ PROGRAM burgers_static
   CALL cmfe_Equations_OutputTypeSet(Equations,CMFE_EQUATIONS_NO_OUTPUT,Err)
   !Finish the equations set equations
   CALL cmfe_EquationsSet_EquationsCreateFinish(EquationsSet,Err)
-
-  !Create the equations set boundary conditions
-  !CALL cmfe_EquationsSetBoundaryConditionsAnalytic(EquationsSet,Err)
 
   !-----------------------------------------------------------------------------------------------------------
   !PROBLEM
@@ -392,9 +378,6 @@ PROGRAM burgers_static
   !-----------------------------------------------------------------------------------------------------------
   !OUTPUT
   !-----------------------------------------------------------------------------------------------------------
-
-  !Output Analytic analysis
-  !Call cmfe_AnalyticAnalysis_Output(DependentField,"BurgersAnalytics_1D",Err)
 
   !export fields
   EXPORT_FIELD=.TRUE.
